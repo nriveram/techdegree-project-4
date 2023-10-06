@@ -24,6 +24,7 @@ class Game {
         document.querySelector('#overlay').style.display = "none";
         this.activePhrase = this.getRandomPhrase(); 
         this.activePhrase.addPhraseToDisplay();
+
     };
     /**
     * Handles onscreen keyboard button clicks
@@ -97,6 +98,37 @@ class Game {
             overlay.classList.add('lose');  
             document.querySelector('#game-over-message').textContent = 'Sorry, better luck next time!';
         }
-    };   
+    }; 
+    /**
+     * Removes all the 'li' elements from the previous game, enables all 
+     * keyboard buttons, and resets the heart images. 
+     */
+    resetGame() {
+        let resetLetters = document.querySelector('#phrase ul'); 
+        resetLetters.innerHTML = ''; 
+
+        let resetButtons = document.querySelectorAll('.key');
+        resetButtons.forEach(button => {
+            //let buttonClass = button.classList; 
+            button.className = '';
+            button.className = 'key'; 
+            button.disabled = false;
+            return button; 
+        });  
+
+        let hearts = document.querySelectorAll("li img");
+        hearts.forEach(heart => {
+            let liveHearts = heart.src.includes('liveHeart.png'); 
+            if (!liveHearts) {
+                heart.src = 'images/liveHeart.png'; 
+            }
+            return heart;
+        }); 
+
+        let overlay = document.querySelector('#overlay');
+        overlay.className = '';
+        overlay.classList.add('start'); 
+
+    };
 
 }

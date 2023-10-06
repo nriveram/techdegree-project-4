@@ -5,6 +5,7 @@ let startButton = document.querySelector("#btn__reset");
 let game; 
 startButton.addEventListener('click', () => {
     game = new Game(); 
+    game.resetGame()
     game.startGame(); 
 });
 
