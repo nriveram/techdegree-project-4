@@ -21,6 +21,7 @@ class Phrase {
                 html += `<li class="space"> </li>`;
             }
         });  
+        // adds html elements to the list 
         phraseDiv.insertAdjacentHTML("beforeend", html); 
         
     }
@@ -36,6 +37,7 @@ class Phrase {
     * @param (string) letter - Letter to display
     */
     showMatchedLetter(letter) {
+        // updates letter element class to show on screen 
         let selectedLetters = document.querySelectorAll(`.${letter}`);
         selectedLetters.forEach(letter => {
             letter.classList.remove('hide'); 

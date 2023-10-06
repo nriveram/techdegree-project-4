@@ -54,12 +54,13 @@ class Game {
     checkForWin() {
         let letters = document.querySelectorAll('#phrase li'); 
         let winBoolean = true; 
+        // converts nodelist to array then filters array to remove space elements 
         let removeSpaceElements = Array.from(letters)
         .filter(space => !space.classList.contains('space')); 
+        // checks if all letter elements are shown 
         removeSpaceElements.forEach(letter => {
             if (!letter.classList.contains('show')) {
                 winBoolean = false; 
-                //console.log(letter); 
             }
         });
         return winBoolean;  
@@ -71,9 +72,11 @@ class Game {
     */
     removeLife() {
         let hearts; 
+        // checks if user lost 4 lives and ends game 
         if (this.missed === 4) {
             this.gameOver(false); 
         } else {
+            // updates missed score and replaces live heart image with a lost heart image 
             this.missed++; 
             hearts = Array.from(document.querySelectorAll("li img")); 
             let liveHearts = hearts.filter(heart => {
@@ -87,8 +90,10 @@ class Game {
     * @param {boolean} gameWon - Whether or not the user won the game
     */
     gameOver(gameWon) {
+        // displays the overlay 
         let overlay = document.querySelector('#overlay');
         overlay.style.display = "block";
+        // adds win/lose message to overlay 
         if (gameWon) {  
             overlay.classList.remove('start');
             overlay.classList.add('win');  
@@ -104,27 +109,30 @@ class Game {
      * keyboard buttons, and resets the heart images. 
      */
     resetGame() {
+        // resets the phrase letters on the screen 
         let resetLetters = document.querySelector('#phrase ul'); 
         resetLetters.innerHTML = ''; 
 
+        // enables the keys on the screen 
         let resetButtons = document.querySelectorAll('.key');
         resetButtons.forEach(button => {
-            //let buttonClass = button.classList; 
             button.className = '';
             button.className = 'key'; 
             button.disabled = false;
-            return button; 
+            //return button; 
         });  
 
+        // changes lost hearts to live hearts 
         let hearts = document.querySelectorAll("li img");
         hearts.forEach(heart => {
             let liveHearts = heart.src.includes('liveHeart.png'); 
             if (!liveHearts) {
                 heart.src = 'images/liveHeart.png'; 
             }
-            return heart;
+            //return heart;
         }); 
 
+        // updates the overlap to start 
         let overlay = document.querySelector('#overlay');
         overlay.className = '';
         overlay.classList.add('start'); 
