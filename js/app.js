@@ -7,3 +7,12 @@ startButton.addEventListener('click', () => {
     game = new Game(); 
     game.startGame(); 
 });
+
+let keys = document.querySelector("#qwerty"); 
+keys.addEventListener('click', (e) => {
+    let key = e.target; 
+    if (key.tagName === 'BUTTON') {
+        game.handleInteraction(key);
+    }
+     
+}); 

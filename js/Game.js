@@ -25,13 +25,25 @@ class Game {
         this.activePhrase = this.getRandomPhrase(); 
         this.activePhrase.addPhraseToDisplay();
     };
-    handleInteraction() {
-        /*
-        let keyBoard = document.querySelector('#qwerty');
-        keyBoard.addEventListener('click', (e) => {
-            let selectedKey = e.target; 
-        }); 
-        */
+    /**
+    * Handles onscreen keyboard button clicks
+    * @param (HTMLButtonElement) button - The clicked button element
+    */
+    handleInteraction(button) {
+        let letterButton = button.textContent; 
+        let isLetterInWord = this.activePhrase.checkLetter(letterButton);
+        button.disabled = true;
+        if (isLetterInWord) {
+            button.classList.add('chosen');
+            this.activePhrase.showMatchedLetter(letterButton); 
+            if (this.checkForWin()) {
+                this.gameOver(true); 
+            }
+        } else {
+            button.classList.add('wrong'); 
+            this.removeLife(); 
+        }
+        
     };
     /**
     * Checks for winning move
@@ -41,12 +53,14 @@ class Game {
     checkForWin() {
         let letters = document.querySelectorAll('#phrase li'); 
         let winBoolean = true; 
-        
-        letters.forEach(letter => {
+        let removeSpaceElements = Array.from(letters)
+        .filter(space => !space.classList.contains('space')); 
+        removeSpaceElements.forEach(letter => {
             if (!letter.classList.contains('show')) {
                 winBoolean = false; 
+                //console.log(letter); 
             }
-        }); 
+        });
         return winBoolean;  
     };
     /**
@@ -56,7 +70,7 @@ class Game {
     */
     removeLife() {
         let hearts; 
-        if (this.missed === 5) {
+        if (this.missed === 4) {
             this.gameOver(false); 
         } else {
             this.missed++; 
